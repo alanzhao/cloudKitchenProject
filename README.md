@@ -37,11 +37,11 @@ Or if you have PyCharm IDE, just load the project and click ctl+R to run it.
 ```
 
 ### Architecture
-    Flask: a web frame work for streaming order changes in real time to web clients
-    Numpy: a scientific library for handing poisson distribution.
+    Flask: a light-weight web frame work for streaming order changes in real time from redis to web clients
+    Numpy: a scientific library for handling poisson distribution.
     Kitchen Class: where all order related things happen, e.g. queuing, processing, deleting, grouping, and optomizing.
     Driver Class: picks up orders, deletes it from redis server.
-    Database: Redis, since it natually supports ttl, which mirrors the food expiration process.
+    Database: Redis, since it natually supports ttl, which mirrors the food expiration process. Compare to traditional SQL database, it much quicker for the type of query I am making.
 
     
     
