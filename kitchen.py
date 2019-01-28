@@ -11,10 +11,12 @@ class Kitchen():
         self.app = app
         self.redis_store = redis_store
 
+    # stream orders from redis to frontend
     def stream_orders(self):
-
+        # recognize difference in orders by comparing snapshots
         previous_orders = []
 
+        # infinite streaming
         while True:
             orders = []
 
@@ -33,17 +35,21 @@ class Kitchen():
             # check changes every second
             time.sleep(1)
 
+    # check if order gets updated
     def did_orders_change(self, orders, previous_orders):
         if len(orders) != len(previous_orders):
-            # if size changes, see if we can move item from overflow shelf to regular shelf
+            # if size changes, it either gets picked up or expired
+            # see if we can move item from overflow shelf to regular shelf
             self.optimize_overflow_shelf()
 
             return True
         elif set([order['id'] for order in orders]) != set([order['id'] for order in previous_orders]):
+            # size stay the same but orders are different
             return True
         else:
             return False
 
+    # group orders into 4 shelves
     def group_orders(self, orders):
         grouped_orders = {
             'hot': [],
@@ -75,6 +81,7 @@ class Kitchen():
 
         return grouped_orders
 
+    # simulate real world inflow of orders
     def queue_orders(self):
         orders = load_data(self.app.config["JSON_FILE"])
         order_size = len(orders)
@@ -83,6 +90,7 @@ class Kitchen():
 
         # assign uuid to each order
         for order in orders:
+            # generate a uuid to keep track of order
             order['id'] = str(uuid.uuid4())
 
             # expiration time in seconds if sitting on a regular shelf
@@ -94,6 +102,7 @@ class Kitchen():
             # record order accept time
             order['acceptedAt'] = round(time.time())
 
+        # simulate poisson distribution for 3.25 orders / second
         for sample in samples:
             if sample > 0:
                 orders_in_a_second = orders[0:sample]
@@ -105,6 +114,7 @@ class Kitchen():
                     for order in orders_in_a_second:
                         self.process_order(order)
                 else:
+                    # break out of top for-loop when exhausted all orders
                     break
 
             # sleep 1 second for the poisson distribution
@@ -112,10 +122,11 @@ class Kitchen():
 
         return order_size
 
+    # process each order
     def process_order(self, order):
         overflow = False
 
-        # check which shelf to put the item
+        # check which shelf to put the item and if it has enough space
         temp = order['temp'].lower()
         if len(self.redis_store.keys(pattern=temp + '*')) < self.app.config[temp.upper() + '_SHELF_SIZE']:
             order['redisKey'] = temp + ':' + order['id']
@@ -127,7 +138,7 @@ class Kitchen():
         else:
             overflow = True
 
-        # see if we can place it into overflow
+        # see if we can place it into overflow shelf
         if overflow:
             overflow = False
 
@@ -151,6 +162,7 @@ class Kitchen():
                 self.remove_expiring_order(order)
                 self.process_order(order)
 
+    # remove the order that will expire next
     def remove_expiring_order(self, order_to_add):
         # first select all orders from the shelf with same temp
         keys = self.redis_store.keys(pattern=order_to_add['temp'].lower() + '*')
@@ -169,9 +181,8 @@ class Kitchen():
         if key_to_remove != '':
             self.redis_store.delete(key_to_remove)
 
-    # remove one item from overflow shelf if possible
+    # remove one item from overflow shelf and place it back to the regular shelf if possible
     def optimize_overflow_shelf(self):
-        # goal is to remove 1 item from overflow shelf and put it back to a regular shelf to prolong the life
         keys = self.redis_store.keys(pattern='overflow*')
 
         if len(keys) > 0:
@@ -206,6 +217,7 @@ class Kitchen():
                 # expiration time in seconds if sitting on a overflow shelf
                 order['shortenedExpirationAge'] = round(order['shelfLife'] * 1.0 / (1 + 2 * order['decayRate']))
 
+                # add the new order to regular shelf
                 self.redis_store.hmset(order['redisKey'], order)
                 self.redis_store.expire(order['redisKey'], order['expirationAge'])
         pass
