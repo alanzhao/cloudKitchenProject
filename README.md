@@ -41,7 +41,7 @@ Or if you have PyCharm IDE, just load the project and click ctl+R to run it.
     Numpy: a scientific library for handling poisson distribution.
     Kitchen Class: where all order related things happen, e.g. queuing, processing, deleting, grouping, and optomizing.
     Driver Class: picks up orders, deletes it from redis server.
-    Database: Redis, since it natually supports ttl, which mirrors the food expiration process. Compare to traditional SQL database, it much quicker for the type of query I am making.
+    Database: Redis, since it natually supports ttl, which mirrors the food expiration process. Compare to traditional SQL database, it's much quicker for the type of query I am making.
 
     
     
