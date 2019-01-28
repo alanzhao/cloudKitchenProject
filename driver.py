@@ -9,6 +9,7 @@ class Driver():
         self.key_to_delete = ""
 
     def dispatch(self, order):
+        # randomly delay pick up from 2 to 8 seconds
         delay = random.randint(2, 8)
         self.key_to_delete = order['redisKey']
 
