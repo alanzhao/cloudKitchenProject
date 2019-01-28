@@ -10,7 +10,7 @@ this is a take home project for cloud kitchen
   $ redis-server /usr/local/etc/redis.conf
   ```
 ### Install and start flask server
-First unzip the project zip & cd into the root of project
+First unzip the project zip & cd into the root of project or you can git clone it.
 ```
   $ python3 -m pip install virtualenv
   $ . venv/bin/activate
@@ -21,9 +21,12 @@ First unzip the project zip & cd into the root of project
 ### Test the program visually
   * open chrome tab, navigate to localhost:5000/orders/queue
   * open chrome tab, navigate to localhost:5000/orders/stream
+  * You can refresh each tab as many times as you want, so if you refresh the queue tab, it will queue all orders one more time.
   
   (It does matter which tab you open first, changes will be streamed to /orders/stream tab, please note that if you use adblock, your browser may block loading js files from localhost)
+  Here is how it looks like in chrome:
   
+  ![alt text](https://raw.githubusercontent.com/alanzhao/cloudKitchenProject/master/static/images/sample.png)
   
 ### Run Unit Test
 ```
@@ -32,8 +35,10 @@ First unzip the project zip & cd into the root of project
 
 ### Architecture
     Flask: a web frame work for streaming order changes in real time to web clients
-    Kitchen: where all order related things happen, e.g. queuing, processing, deleting, & grouping.
-    Driver: picks up orders, deletes it from redis server.
+    Kitchen Class: where all order related things happen, e.g. queuing, processing, deleting, grouping, and optomizing.
+    Driver Class: picks up orders, deletes it from redis server.
+    Database: Redis, since it natually supports ttl, which mirrors the food expiration process.
+
     
     
 
