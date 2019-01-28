@@ -10,11 +10,8 @@ function processOrders(orders) {
 
         var tableId = shelves[temp]
 
+        // refresh the table view except the headers
         $(tableId).find("tr:gt(0)").remove();
-
-
-        console.log(orders)
-        console.log("*")
 
         function drawTable(data, tableId) {
             for (var i = 0; i < data.length; i++) {
