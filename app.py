@@ -18,6 +18,8 @@ app.config.from_mapping(
 
 redis_store = redis.Redis(host=app.config['REDIS_HOST'], port=app.config['REDIS_PORT'], db=app.config['REDIS_DB'],
                           encoding='utf-8', decode_responses=True)
+
+# clear out the db so each run is independent
 redis_store.flushdb()
 
 

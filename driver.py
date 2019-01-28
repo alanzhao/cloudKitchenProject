@@ -12,6 +12,7 @@ class Driver():
         delay = random.randint(2, 8)
         self.key_to_delete = order['redisKey']
 
+        # this timer needs to be non-blocking with a callback
         timer = threading.Timer(delay, self.remove_order)
         timer.start()
 
