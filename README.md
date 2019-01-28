@@ -2,7 +2,7 @@
 this is a take home project for cloud kitchen
  
  ### Prerequisites
- System should have brew, python3, and pip
+ System should have brew, python3, and pip installed already.
  
  ### Install and start redis
  ``` 
