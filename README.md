@@ -25,7 +25,7 @@ Or if you have PyCharm IDE, just load the project and click ctl+R to run it.
   * open chrome tab, navigate to localhost:5000/orders/stream (to start streaming results)
   * You can refresh each tab as many times as you want, so if you refresh the queue tab, it will queue all orders one more time.
   
-  ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `It does matter which tab you open first, changes will be streamed to /orders/stream tab, please note that if you use adblock, your browser may block loading js files from localhost`
+  ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `It does not matter which tab you open first, changes will be streamed to /orders/stream tab, please note that if you use adblock, your browser may block loading js files from localhost`
   
   Here is how it looks like in chrome:
   
