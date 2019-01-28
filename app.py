@@ -34,7 +34,7 @@ def queue_orders():
     kitchen = Kitchen(app, redis_store)
     size = kitchen.queue_orders()
 
-    return str(size) + 'Orders queued'
+    return str(size) + ' orders queued'
 
 
 if __name__ == '__main__':
