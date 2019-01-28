@@ -19,6 +19,7 @@ First git clone the project, and then cd into it.
   $ export FLASK_APP=app.py
   $ python3 -m flask run
  ```
+Or if you have PyCharm IDE, just load the project and click ctl+R to run it.
 ### Test the program visually
   * open chrome tab, navigate to localhost:5000/orders/queue (to start queueing orders)
   * open chrome tab, navigate to localhost:5000/orders/stream (to start streaming results)
