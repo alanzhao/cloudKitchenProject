@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+    <title>Cloud Kitchen Prototype</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+
+<body>
+<script src="/static/javascript/processor.js"></script>
+<div class="header">Hot Shelf</div>
+
+<table id="hotOrderDataTable" class="ctable">
+    <tr>
+        <th>Number</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>ExpirationAge</th>
+        <th>CurrentAge</th>
+        <th>NormalizedValue</th>
+        <th>Temp</th>
+        <th>shelfLife</th>
+        <th>decayRate</th>
+    </tr>
+</table>
+
+<div class="header">Cold Shelf</div>
+
+<table id="coldOrderDataTable" class="ctable">
+    <tr>
+        <th>Number</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>ExpirationAge</th>
+        <th>CurrentAge</th>
+        <th>NormalizedValue</th>
+        <th>Temp</th>
+        <th>shelfLife</th>
+        <th>decayRate</th>
+    </tr>
+</table>
+
+<div class="header">Frozen Shelf</div>
+
+<table id="frozenOrderDataTable" class="ctable">
+    <tr>
+        <th>Number</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>ExpirationAge</th>
+        <th>CurrentAge</th>
+        <th>NormalizedValue</th>
+        <th>Temp</th>
+        <th>shelfLife</th>
+        <th>decayRate</th>
+    </tr>
+</table>
+
+<div class="header">Overflow Shelf</div>
+
+<table id="overflowOrderDataTable" class="ctable">
+    <tr>
+        <th>Number</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>ExpirationAge</th>
+        <th>CurrentAge</th>
+        <th>NormalizedValue</th>
+        <th>Temp</th>
+        <th>shelfLife</th>
+        <th>decayRate</th>
+    </tr>
+</table>
+
+{% for orders_stream in data %}
+    <script>
+        var orders = JSON.parse(unescape("{{ orders_stream }}").replace(/&#39;/g, "\""));
+        processOrders(orders);
+    </script>
+{% endfor %}
+
+</body>
+</html>

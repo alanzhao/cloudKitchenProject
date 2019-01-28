@@ -1,0 +1,23 @@
+.header {
+    text-align: center;
+    margin: 50px;
+}
+
+.ctable {
+    border: 1px solid #1c94c4;
+    width: 100%;
+    border-spacing: 20px;
+    border-collapse: separate;
+}
+
+.trow {
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+.ctd {
+    border-top: 1px solid #1c94c4;
+    margin: 10px;
+    padding: 10px;
+}

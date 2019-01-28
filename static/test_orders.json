@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Banana Split",
+    "temp": "frozen",
+    "shelfLife": 20,
+    "decayRate": 0.63
+  },
+  {
+    "name": "McFlury",
+    "temp": "frozen",
+    "shelfLife": 375,
+    "decayRate": 0.4
+  },
+  {
+    "name": "Acai Bowl",
+    "temp": "cold",
+    "shelfLife": 249,
+    "decayRate": 0.3
+  },
+  {
+    "name": "Yogurt",
+    "temp": "cold",
+    "shelfLife": 263,
+    "decayRate": 0.37
+  }
+]
