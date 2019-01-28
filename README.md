@@ -10,7 +10,7 @@ this is a take home project for cloud kitchen
   $ redis-server /usr/local/etc/redis.conf
   ```
 ### Install and start flask server
-First unzip the project zip & cd into the root of project or you can git clone it.
+First git clone the project, and then cd into it.
 ```
   $ python3 -m pip install virtualenv
   $ . venv/bin/activate
@@ -69,4 +69,4 @@ First unzip the project zip & cd into the root of project or you can git clone i
     - Check if that regular shelf is full or not
     - If it is full, then we will just skip
     - If not full, we will delete the order from overflow shelf and insert it into the regular shelf.
-    - Of course, we need to update all attributes associated with the orde ruch as time to live, age, etc.
+    - Of course, we need to update all attributes associated with the order such as time to live, age, etc.
