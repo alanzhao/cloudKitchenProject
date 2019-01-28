@@ -22,6 +22,7 @@ class Kitchen():
                 order = self.redis_store.hgetall(key)
                 orders.append(order)
 
+            # if orders changes, stream the change to frontend
             if self.did_orders_change(orders, previous_orders):
                 previous_orders = orders
 
@@ -29,11 +30,14 @@ class Kitchen():
             else:
                 previous_orders = orders
 
+            # check changes every second
             time.sleep(1)
 
     def did_orders_change(self, orders, previous_orders):
         if len(orders) != len(previous_orders):
+            # if size changes, see if we can move item from overflow shelf to regular shelf
             self.optimize_overflow_shelf()
+
             return True
         elif set([order['id'] for order in orders]) != set([order['id'] for order in previous_orders]):
             return True
@@ -48,6 +52,7 @@ class Kitchen():
             'overflow': [],
         }
 
+        # calculate the corresponding attributes for each order for displaying in the frontend
         for order in orders:
             order['currentAge'] = int(order['expirationAge']) - self.redis_store.ttl(order['redisKey'])
 
@@ -102,7 +107,7 @@ class Kitchen():
                 else:
                     break
 
-            # sleep 1 second
+            # sleep 1 second for the poisson distribution
             time.sleep(1)
 
         return order_size
